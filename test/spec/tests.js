@@ -38,7 +38,7 @@ describe("`C` namespace", function() {
 
 describe("`ReportsContainer` component", function() {
 
-  it("creates a report for each report its given", function() {
+  it("creates a report for each report it's given", function() {
     var Container = C.ReportsContainer;
     var container = <Container reports={mock_data} />;
 
@@ -50,7 +50,7 @@ describe("`ReportsContainer` component", function() {
 
     children.forEach(function(child, i) {
       var correctType = TestUtils.isCompositeComponentWithType(
-    child, C.Report );
+        child, C.Report );
       expect(correctType).toBe(true);
       expect(child.props.report.emails).toBe(mock_data[i].emails);
       expect(child.props.report.report_name).toBe(mock_data[i].report_name);
@@ -72,13 +72,15 @@ describe("`Report` component", function() {
 
   it("creates an Email component for each email", function() {
     var children = report._renderedComponent.props.children;
+    var subComponents = children[1].props.children;
 
     expect(children.length).toBe(2);
 
-    children.forEach(function(child, i) {
+    subComponents.forEach(function(child, i) {
       var correctType = TestUtils.isCompositeComponentWithType(
         child, C.Email);
       expect(correctType).toBe(true);
+      expect(child.props.email).toBe(report_data.emails[i]);
     });
   });
 
@@ -91,5 +93,24 @@ describe("`Report` component", function() {
     report = <Report report={report_data} />;
 
     TestUtils.renderIntoDocument(report);
+  }
+});
+
+
+describe("`Email` component", function() {
+  var email;
+  var email_prop = "Original Email";
+
+  beforeEach(setup);
+
+  it("renders the email", function() {
+    expect(email.state.email).toBe(email_prop);
+  });
+
+  function setup() {
+    var Email = C.Email;
+    email = <Email email={email_prop} />;
+
+    TestUtils.renderIntoDocument(email);
   }
 });

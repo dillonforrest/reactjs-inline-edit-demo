@@ -7,8 +7,16 @@
 
 
   var Email = C.Email = React.createClass({
+    getInitialState: function() {
+      return {
+        email: this.props.email,
+      };
+    },
+
     render: function() {
-      return <div />;
+      return (<li>
+        <div style={{display: 'inline-block'}}>{this.state.email}</div>
+      </li>);
     }
   });
 
@@ -24,9 +32,13 @@
 
     render: function() {
       var emails = this.state.emails.map(function(email, i) {
-        return <Email key={i} />;
+        return <Email email={email} key={i} />;
       });
-      return <div>{emails}</div>;
+
+      return (<div>
+        <h3>{this.state.name}</h3>
+        <ul>{emails}</ul>
+      </div>);
     }
   });
 
@@ -71,6 +83,7 @@
 
   React.renderComponent(
     <ReportsContainer reports={fetched_reports} />,
-    document.body
+    document.getElementById('app')
   );
+
 })(window, React);
