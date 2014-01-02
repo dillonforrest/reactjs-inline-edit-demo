@@ -15,7 +15,8 @@
 
     render: function() {
       return (<li>
-        <div style={{display: 'inline-block'}}>{this.state.email}</div>
+        <span class="display-name">{this.state.email}</span>
+        <span class="click-to-delete">X</span>
       </li>);
     }
   });
